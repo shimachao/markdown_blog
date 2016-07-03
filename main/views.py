@@ -1,7 +1,6 @@
 # coding:utf-8
 from flask import Flask
 from db import Article
-from pony.orm import select, commit, db_session
 
 app = Flask(__name__)
 
@@ -12,8 +11,8 @@ def index():
 @app.route('/article/<int:article_id>')
 def article(article_id):
     # 返回请求的文章
-    return '等数据库弄好才有文章显示...'
-    select
+    d = Article.select().where(Article.id == 2).get()
+    return d.description
 
 if __name__ == '__main__':
     app.run(debug=True)

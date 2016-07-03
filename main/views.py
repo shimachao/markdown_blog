@@ -16,8 +16,8 @@ def article(article_id):
     d = Article.select().where(Article.id == 2).get()
     path = '..\\' + d.path
     file = open(file=path, mode='r', encoding='utf-8')
-    body = md(file.read())
-    return render_template('article.html', body=body)
+    text = md(file.read())
+    return render_template('article.html', text=text)
     # return body
 
 @app.route('/static/img/<filename>')

@@ -1,6 +1,7 @@
 # coding:utf-8
 from flask import Flask
 from db import Article
+from misaka import html
 
 app = Flask(__name__)
 
@@ -12,7 +13,9 @@ def index():
 def article(article_id):
     # 返回请求的文章
     d = Article.select().where(Article.id == 2).get()
-    return d.description
+    path = '..\\' + d.path
+    file = open(file=path, mode='r', encoding='utf-8')
+    return html(file.read())
 
 if __name__ == '__main__':
     app.run(debug=True)

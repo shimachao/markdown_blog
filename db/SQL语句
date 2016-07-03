@@ -1,0 +1,11 @@
+# 创文章表
+id，标题，内容描述，创建时间，最后更新时间，阅读次数，评论数，目录
+CREATE TABLE article (
+id SERIAL PRIMARY KEY,
+title varchar(128) NOT NULL,
+description varchar(256) NOT NULL,
+creation_timestamp timestamp NOT NULL,
+last_updated_timestamp timestamp NOT NULL,
+viewed_times integer DEFAULT 0,
+commnet_times integer DEFAULT 0,
+path varchar(256) NOT NULL);

@@ -1,7 +1,7 @@
 # coding:utf-8
 from flask import Flask
 from db import Article
-from misaka import html
+from md_renderer import md
 
 app = Flask(__name__)
 
@@ -15,7 +15,7 @@ def article(article_id):
     d = Article.select().where(Article.id == 2).get()
     path = '..\\' + d.path
     file = open(file=path, mode='r', encoding='utf-8')
-    return html(file.read())
+    return md(file.read())
 
 if __name__ == '__main__':
     app.run(debug=True)

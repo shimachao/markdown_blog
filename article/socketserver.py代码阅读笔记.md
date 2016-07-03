@@ -19,6 +19,7 @@ socketserver中类分为三种类型。一是Server类：BaseServer/TCPServer/UD
 二是Handler类：BaseRequestHandler/DatagramRequestHandler/StreamRequestHandler用来处理每一个客户请求。一般用使用BaseRequestHandler就行，但StreamRequestHandler/DatagramRequestHandler提供了一些特别的功能，前者用来处理流式（TCP）请求，后者处理数据报（UDP）请求。Server每收到一个客户请求就会创建一个Handler类示例来处理该请求。默认情况下，TCPServer/UDPServer是单进程单线程的模型，依次处理每个客户请求，一个请求处理完毕才能接着处理下一个请求。
 
 三是MixIn类：ForkingMixIn/ThreadingMixIn用来为Server提供多进程/多线程并发处理能力的。ForkingMixIn是多进程模型，ThreadingMixin是多线程模型。这里特别巧妙的是，你只要创建一个类，同时继承Server类和MixIn类就能自动获得并发处理请求的能力。该模块本身就直接提供了这种类。它们的代码非常简单:
+
 ```Python
 class ForkingUDPServer(ForkingMixIn, UDPServer): pass
 class ForkingTCPServer(ForkingMixIn, TCPServer): pass
@@ -26,10 +27,11 @@ class ForkingTCPServer(ForkingMixIn, TCPServer): pass
 class ThreadingUDPServer(ThreadingMixIn, UDPServer): pass
 class ThreadingTCPServer(ThreadingMixIn, TCPServer): pass
 ```
+
 你可以直接让你的server类继承自它们就能获得具有并发能力的server。
 
 最后贴一下该模块中类结构。
-![](整体类结构图.png)
+![](../static/img/整体类结构图.png)
 在Linux平台上socketsever模块还提供了UnixStreamServer、UnixDatagramServer、ThreadingUnixStreamServer、ThreadingUnixDatagramServer类，它们都和UNIX域相关，本文不关心它们。
 
 ### 简单使用
@@ -186,7 +188,7 @@ def handle_request(self):
 
 serve_forever()处理一个请求的正常流程如下图：
 
-![](serve_forver处理一个请求的流程.png)
+![](../static/img/serve_forver处理一个请求的流程.png)
 
 图中有"empty"标记的方法表示该方法在基类（BaseServer）中的实现为空。子类或Mixin可以重写它。有"subclass"标记的方法表示基类中没有定义该方法，子类或MixIin必须提供实现。有"default"和"subclass"标记的方法表示基类只提供了一个默认实现，子类可以根据需要重写它。有"Mixin"标记的方法表示该方法留给Mixin重写，以达到加入新功能的目地。
 
@@ -246,7 +248,7 @@ OK，我们已经走的有点远了。现在前面分析过的函数已经执行
 
 如果在调用process_request()时发生异常，流程如下：
 
-![](serve_forever调用process_request出错.png)
+![](../static/img/serve_forever调用process_request出错.png)
 
 process_request()调用的函数和前面一样，所以用...代表。在调用process_request()出现异常时，\_handle_request_noblock()接着会调用handle_error()和shutdown_request()。handle_error()在基类中的默认实现只是简单地打印异常内容，并继续运行。你可以重写它来实现自己的异常处理。
 
@@ -254,7 +256,7 @@ process_request()调用的函数和前面一样，所以用...代表。在调用
 
 ### handle_request()正常处理流程
 
-![](handle_request正常流程.png)
+![](../static/img/handle_request正常流程.png)
 
 handle_request()用来接收并处理单个客户请求，所以没有轮询。处理流程如上图，\_handle_request_noblock()的函数调用栈和前面serve_forever()一样
 
@@ -262,7 +264,7 @@ handle_request()用来接收并处理单个客户请求，所以没有轮询。�
 
 ### handle_request()超时处理流程
 
-![](handle_request超时.png)
+![](../static/img/handle_request超时.png)
 
 handle_timeout()表示超时后还没收到请求后的处理。该方法在基类中也是空实现，你可以在子类中重写它。
 
@@ -350,7 +352,7 @@ def finish(self):
 
 可以看到BaseRequestHandler中的这三个方法都是空实现，所以直接使用BaseRequestHandler，你至少得重写handle()，然后根据需要决定是否重写setup()、finish()。处理请求涉及到的函数调用堆栈如下图：
 
-![](Handler处理请求流程.png)
+![](../static/img/Handler处理请求流程.png)
 
 setup()是处理前的初始化操作，handle()是处理请求，finish()是清理操作。
 
@@ -409,7 +411,7 @@ def finish(self):
 
 前面介绍时说过ForkingMixIn、ThreadingMixIn可以给Server添加并发功能。ForkingMixIn使用的是进程模型，为每个请求创建一个进程。ThreadingMixIn使用的线程模型，为每个请求创建一个线程。它们都没继承任何类，但是它们实现了BaseServer中的部分方法。假设一个类TestServer同时继承了ForkingMixIn和TCPServer，如下图所示，只展示部分关键的方法。
 
-![](ForkMixin+TCPServer.png)
+![](../static/img/ForkMixin+TCPServer.png)
 
 但通过TestServer的示例调用serve_forever()时，serve_forever()调用process_request()来处理请求，根据TestServer的继承层次和Python的属性查找规则（不知道规则的先去看一下Python文档），最先找到的是ForkingMixIn类的process_request()方法。所以最终调用的是ForkingMixIn中的process_request方法。在来看看ForkingMixIn的process_request方法实现。
 

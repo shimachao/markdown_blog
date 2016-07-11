@@ -1,0 +1,21 @@
+body{
+    background-color: whitesmoke;
+}
+
+aside#directory, article{
+    background-color: white;
+}
+
+aside#directory{
+    position: fixed;
+    margin: 10px;
+    left: 0px;
+    top: 0px;
+    width: 300px;
+}
+
+article{
+    margin: 10px;
+    margin-left: 320px;
+    margin-right: 320px;
+}

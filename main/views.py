@@ -27,8 +27,8 @@ def img_file(filename):
 
 @app.route('/static/css/<filename>')
 def css_file(filename):
-    img = open(file='../static/css/'+filename, mode='r')
-    return img.read()
+    css = open(file='../static/css/'+filename, mode='r')
+    return css.read()
 
 if __name__ == '__main__':
     app.run(debug=True)

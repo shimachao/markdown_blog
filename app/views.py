@@ -18,17 +18,7 @@ def article(article_id):
     file = open(file=path, mode='r', encoding='utf-8')
     text = md(file.read())
     return render_template('article.html', text=text)
-    # return body
-
-@app.route('/static/img/<filename>')
-def img_file(filename):
-    img = open(file='../static/img/'+filename, mode='rb')
-    return img.read()
-
-@app.route('/static/css/<filename>')
-def css_file(filename):
-    css = open(file='../static/css/'+filename, mode='r')
-    return css.read()
+    
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -25,14 +25,17 @@ article h1{
     font-weight: bold;
     font-size: 1.5em;
     text-align: center;
+    border-bottom: 2px solid #eeeeee;
 }
 
 article h2{
     font-size: 1.4em;
+    padding-top: 20px;
 }
 
 article h3{
     font-size: 1.3em;
+    padding-top: 20px;
 }
 
 article h4{

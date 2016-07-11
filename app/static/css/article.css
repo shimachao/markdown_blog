@@ -49,3 +49,7 @@ article h5{
 article h6{
     font-size: 1em;
 }
+
+article img{
+    border:0;max-width:100%;
+}

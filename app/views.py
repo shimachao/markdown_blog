@@ -3,8 +3,10 @@ from flask import Flask
 from flask import request, render_template
 from db import Article
 from md_renderer import md
+from flask.ext.bootstrap import Bootstrap
 
 app = Flask(__name__)
+boot = Bootstrap(app)
 
 @app.route('/')
 def index():

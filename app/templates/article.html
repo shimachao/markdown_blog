@@ -14,12 +14,18 @@
         
     </head>
     <body>
-        <aside id="directory">
-            <p>这里将有个文章的目录导航。正在施工中... </p>
-        </aside>
-        <article>
-        {{text|safe}}
-        </article>
+        <div class="container-fluid">
+            <div class="col-md-4">
+                <aside id="directory">
+                    <p>这里将有个文章的目录导航。正在施工中... </p>
+                </aside>
+            </div>
+            <div class="col-md-8">
+                <article>
+                {{text|safe}}
+                </article>
+            </div>
+        </div>
 
         <script src="{{url_for('static', filename='js/jquery-1.11.3.min.js')}}"></script>
         <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>

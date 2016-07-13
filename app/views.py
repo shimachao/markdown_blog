@@ -19,7 +19,7 @@ def article(article_id):
     path = '..\\' + d.path
     file = open(file=path, mode='r', encoding='utf-8')
     text = md(file.read())
-    return render_template('article.html', text=text)
+    return render_template('article.html', title=d.title,text=text)
     
 
 if __name__ == '__main__':

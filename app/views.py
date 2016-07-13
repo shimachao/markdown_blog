@@ -15,7 +15,7 @@ def index():
 @app.route('/article/<int:article_id>')
 def article(article_id):
     # 返回请求的文章
-    d = Article.select().where(Article.id == 2).get()
+    d = Article.select().where(Article.id == article_id).get()
     path = '..\\' + d.path
     file = open(file=path, mode='r', encoding='utf-8')
     text = md(file.read())
